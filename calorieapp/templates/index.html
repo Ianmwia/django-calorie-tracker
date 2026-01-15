@@ -6,5 +6,16 @@
 
 {% block content %}
 <h1 class="font-bold">Calorie Counter</h1>
+<div>
+    <p>ADD FOOD</p>
+    <form method="post" class="flex flex-col border-3 p-1">
+        {% csrf_token %}
+        <label for="Food Name">Food Name: </label>
+        <input type="text" name="name" id="food" placeholder="Food Name" required>
+        <label for="Food Name">Calories: </label>
+        <input type="number" name="calories" id="calories" placeholder="calories" required>
+        <button class="bg-blue-300 hover:bg-blue-700 text-white" type="submit">Add Food</button>
+    </form>
+</div>
 
 {% endblock content %}
