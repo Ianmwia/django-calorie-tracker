@@ -16,7 +16,11 @@ def add_food(request):
 #view a list of all food items added
 def list_all_food_items(request):
     food_items = Food.objects.all()
-    return render(request, 'index.html', {'food_items': food_items})
+    total_calories = 0
+    for item in food_items:
+        total_calories += item.calories
+        total_calories = total_calories
+    return render(request, 'index.html', {'food_items': food_items, 'total_calories': total_calories})
 
 
 #remove food items, preferably on at a time
@@ -26,3 +30,13 @@ def remove_food_item(request):
         food = Food.objects.get(id=food_id)
         food.delete()
     return redirect('list_food')
+
+# calculate and display the total number of calories consumed, maybe add date
+# def total_calories(request):
+#     food_items = Food.objects.all()
+#     total_calories = 0
+#     for item in food_items:
+#         total_calories += item.calories
+#         total_calories = total_calories
+#     return render (request, 'index.html', {'total_calories': total_calories})
+#render issues
