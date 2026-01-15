@@ -22,6 +22,11 @@
     
     {% for food in food_items %}
         <li>{{food.name}} - {{food.calories}} Calories</li>
+            <form action="{% url 'remove_food' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="food_id" value="{{food.id}}">
+                <button class="bg-red-200 hover:bg-red-500 text-white" type="submit">Delete</button>
+            </form>
         {% empty %}
         <li>No Food Items Found</li>
     {% endfor %}
