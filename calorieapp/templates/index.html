@@ -8,7 +8,7 @@
 <h1 class="font-bold">Calorie Counter</h1>
 <div>
     <p>ADD FOOD</p>
-    <form method="post" class="flex flex-col border-3 p-1">
+    <form method="post" class="flex flex-col border-3 p-1" action="{% url 'add_food' %}">
         {% csrf_token %}
         <label for="Food Name">Food Name: </label>
         <input type="text" name="name" id="food" placeholder="Food Name" required>
