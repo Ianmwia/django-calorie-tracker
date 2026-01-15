@@ -13,3 +13,9 @@ def add_food(request):
         Food.objects.create(name = name, calories = calories)
     return redirect('index')
 
+#view a list of all food items added
+def list_all_food_items(request):
+    food_items = Food.objects.all()
+    return render(request, 'index.html', {'food_items': food_items})
+
+

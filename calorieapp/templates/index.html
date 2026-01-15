@@ -17,5 +17,15 @@
         <button class="bg-blue-300 hover:bg-blue-700 text-white" type="submit">Add Food</button>
     </form>
 </div>
+<div>
+    <p>Food list</p>
+    
+    {% for food in food_items %}
+        <li>{{food.name}} - {{food.calories}} Calories</li>
+        {% empty %}
+        <li>No Food Items Found</li>
+    {% endfor %}
+        
+</div>
 
 {% endblock content %}
