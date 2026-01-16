@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Food
 
 # Create your views here.
@@ -27,7 +27,8 @@ def list_all_food_items(request):
 def remove_food_item(request):
     if request.method == 'POST':
         food_id = request.POST.get('food_id')
-        food = Food.objects.get(id=food_id)
+        #food = Food.objects.get(id=food_id) #http hidden vs <str:int> avoid displaying data to the user and send data to the browser
+        food = get_object_or_404(Food, id=food_id)
         food.delete()
     return redirect('list_food')
 
@@ -40,3 +41,5 @@ def remove_food_item(request):
 #         total_calories = total_calories
 #     return render (request, 'index.html', {'total_calories': total_calories})
 #render issues
+
+# reset calories count ## need user and date

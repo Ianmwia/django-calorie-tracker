@@ -10,9 +10,9 @@
     <p>ADD FOOD</p>
     <form method="post" class="flex flex-col border-3 p-1" action="{% url 'add_food' %}">
         {% csrf_token %}
-        <label for="Food Name">Food Name: </label>
-        <input type="text" name="name" id="food" placeholder="Food Name" required>
-        <label for="Food Name">Calories: </label>
+        <label for="food">Food Name: </label>
+        <input type="text" name="name" id="food" placeholder="Food Name" required autocomplete="on">
+        <label for="calories">Calories: </label>
         <input type="number" name="calories" id="calories" placeholder="calories" required>
         <button class="bg-blue-300 hover:bg-blue-700 text-white" type="submit">Add Food</button>
     </form>
@@ -21,15 +21,18 @@
     <p>Food list</p>
     
     {% for food in food_items %}
-        <li>{{food.name}} - {{food.calories}} Calories</li>
-            <form action="{% url 'remove_food' %}" method="post">
-                {% csrf_token %}
-                <input type="hidden" name="food_id" value="{{food.id}}">
-                <button class="bg-red-200 hover:bg-red-500 text-white" type="submit">Delete</button>
-            </form>
-        {% empty %}
-        <li>No Food Items Found</li>
+        <div class="flex sm:w-full sm:flex-wrap">
+            <li class="mr-3 mb-4">{{food.name}} - {{food.calories}} Calories</li>
+                <form action="{% url 'remove_food' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="food_id" value="{{food.id}}">
+                    <button class="bg-red-200 hover:bg-red-500 text-white p-1 rounded-sm" type="submit">Delete</button>
+                </form>
+            {% empty %}
+            <li>No Food Items Found</li>
+        </div>
     {% endfor %}
+        
 </div>
 <div>
     <p>Total Calories</p>
