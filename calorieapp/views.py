@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Food
+from .models import Food, UserEntry
+from django.contrib.auth.models import User
+from datetime import date
 
 # Create your views here.
 def index(request):
@@ -10,7 +12,12 @@ def add_food(request):
     if request.method == 'POST':
         name = request.POST.get('name')
         calories = request.POST.get('calories')
-        Food.objects.create(name = name, calories = calories)
+
+        # create user
+        user = request.user
+
+        food, created = Food.objects.get_or_create(name = name, calories = calories)
+        UserEntry.objects.create(user = user,food = food, date = date.today())
     return redirect('list_food')
 
 #view a list of all food items added
