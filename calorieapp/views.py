@@ -22,12 +22,15 @@ def add_food(request):
 
 #view a list of all food items added
 def list_all_food_items(request):
-    food_items = Food.objects.all()
+    user = request.user
+    user_entries = UserEntry.objects.filter(user=user)
+
+    #food_items = Food.objects.all()
     total_calories = 0
-    for item in food_items:
+    for item in user_entries:
         total_calories += item.calories
         total_calories = total_calories
-    return render(request, 'index.html', {'food_items': food_items, 'total_calories': total_calories})
+    return render(request, 'index.html', {'food_items': user_entries, 'total_calories': total_calories})
 
 
 #remove food items, preferably on at a time
@@ -35,7 +38,9 @@ def remove_food_item(request):
     if request.method == 'POST':
         food_id = request.POST.get('food_id')
         #food = Food.objects.get(id=food_id) #http hidden vs <str:int> avoid displaying data to the user and send data to the browser
-        food = get_object_or_404(Food, id=food_id)
+        #food = get_object_or_404(Food, id=food_id)
+        user = request.user
+        food = get_object_or_404(UserEntry, user=user, id=food_id)
         food.delete()
     return redirect('list_food')
 
