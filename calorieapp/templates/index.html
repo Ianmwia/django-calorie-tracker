@@ -20,12 +20,14 @@
 <div>
     <p>Food list</p>
     
-    {% for food in food_items %}
+    {% for item in food_items %}
         <div class="flex sm:w-full sm:flex-wrap">
-            <li class="mr-3 mb-4">{{food.name}} - {{food.calories}} Calories</li>
+            <li class="mr-3 mb-4">{{item.food.name}} - {{item.food.calories}} Calories</li>
+            <br>
+            <p>Date: {{item.date}}</p>
                 <form action="{% url 'remove_food' %}" method="post">
                     {% csrf_token %}
-                    <input type="hidden" name="food_id" value="{{food.id}}">
+                    <input type="hidden" name="food_id" value="{{item.id}}">
                     <button class="bg-red-200 hover:bg-red-500 text-white p-1 rounded-sm" type="submit">Delete</button>
                 </form>
             {% empty %}
