@@ -2,8 +2,22 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Food, UserEntry
 from django.contrib.auth.models import User
 from datetime import date
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('index')
+    else:
+        form = UserCreationForm()
+    return render(request, 'registration/register.html', {'form': form})
+@login_required       
 def index(request):
     return render(request ,'index.html' )
 
@@ -28,8 +42,8 @@ def list_all_food_items(request):
     #food_items = Food.objects.all()
     total_calories = 0
     for item in user_entries:
-        total_calories += item.calories
-        total_calories = total_calories
+        total_calories += item.food.calories
+
     return render(request, 'index.html', {'food_items': user_entries, 'total_calories': total_calories})
 
 
