@@ -22,6 +22,7 @@ def index(request):
     return render(request ,'index.html' )
 
 #add new food item with calorie count
+@login_required
 def add_food(request):
     if request.method == 'POST':
         name = request.POST.get('name')
@@ -35,6 +36,7 @@ def add_food(request):
     return redirect('list_food')
 
 #view a list of all food items added
+@login_required
 def list_all_food_items(request):
     user = request.user
     user_entries = UserEntry.objects.filter(user=user)
@@ -48,6 +50,7 @@ def list_all_food_items(request):
 
 
 #remove food items, preferably on at a time
+@login_required
 def remove_food_item(request):
     if request.method == 'POST':
         food_id = request.POST.get('food_id')
